@@ -8,18 +8,23 @@ scale factors.
 
 ## Usage
 
--   Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
--   Create and start Postgres container: `docker-compose up`      
--   Stop and remove Postgres container: `docker-compose down`
+-   Install [Docker](https://www.docker.com/)
+-   Build the docker image: `docker build --tag postgres-tpcds-metastore:1.0 .`
+-   Create and start Postgres container:
+  `docker run --name postgres_metastore -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres-tpcds-metastore:1.0`      
+-   Verify that the container is running: `docker ps`
+-   Stop Postgres container: `docker stop postgres_metastore`
+-   Remove Postgres container: `docker rm postgres_metastore`
 
 By default the database will be initialized with `tpcds30tb_metastore_3_1_3000`
-dump. You can choose another dump by changing the `METASTORE_DUMP` variable in
-`docker-compose.yml`.
+dump. You can choose another dump by changing environment variable
+`METASTORE_DUMP` during the initialization of the container (using `-e` docker
+argument).
 
 If you want to check the contents of the metastore the easiest way would be to
 open a shell in the container and connect to the database via psql.
 
-    docker exec -it CONTAINER_ID bash
+    docker exec -it postgres_metastore bash
     su postgres
     psql -U hive -d metastore
 
