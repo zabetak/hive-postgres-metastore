@@ -61,8 +61,24 @@ the most relevant for exploration and testing purposes:
 | tpcds30tb_metastore_3_1_3000 | tpcds_bin_partitioned_orc_30000 |
 
 If you need to use the current dumps with a more recent version of Hive then
-after creating and starting the Postgres container you can use the
+there are two options.
+
+### Option A
+
+After creating and starting the Postgres container you can use the
 [schematool](https://cwiki.apache.org/confluence/display/Hive/Hive+Schema+Tool)
 to upgrade the metastore:
 
     schematool -dbType postgres -upgradeSchemaFrom 3.1.3000 -driver org.postgresql.Driver -url jdbc:postgresql://localhost:5432/metastore -userName hive -passWord hive
+
+
+### Option B
+
+Use the respective environment variables when you start the docker container:
+`-e UPGRADE=true UPGRADE_FROM=3.1.3000 UPGRADE_TO=4.0.0`
+
+By default the upgrade to version `4.0.0` is activated but you can disable by
+setting `UPGRADE=false`.
+
+Note that eventually this option for upgrading the metastore may be be removed
+in favor of `schemaTool`.
