@@ -9,9 +9,9 @@ scale factors.
 ## Usage
 
 -   Install [Docker](https://www.docker.com/)
--   Build the docker image: `docker build --tag postgres-tpcds-metastore:1.0 .`
+-   Build the docker image: `docker build --tag postgres-tpcds-metastore:1.1 .`
 -   Create and start Postgres container:
-  `docker run --name postgres_metastore -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres-tpcds-metastore:1.0`      
+  `docker run --name postgres_metastore -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres-tpcds-metastore:1.1`      
 -   Verify that the container is running: `docker ps`
 -   Stop Postgres container: `docker stop postgres_metastore`
 -   Remove Postgres container: `docker rm postgres_metastore`
@@ -58,7 +58,7 @@ the most relevant for exploration and testing purposes:
 | Dump                         | Hive DB Name                    |
 | ---------------------------- | ------------------------------- |
 | tpcds10tb_metastore_3_1_3000 | tpcds_bin_partitioned_orc_10000 |
-| tpcds30tb_metastore_3_1_3000 | tpcds_bin_partitioned_orc_30000 |
+| tpcds30tb_metastore_3_1_3000 | default |
 
 If you need to use the current dumps with a more recent version of Hive then
 there are two options.
