@@ -9,9 +9,9 @@ scale factors.
 ## Usage
 
 -   Install [Docker](https://www.docker.com/)
--   Build the docker image: `docker build --tag postgres-tpcds-metastore:1.1 .`
+-   Build the docker image: `docker build --tag postgres-tpcds-metastore:1.0 .`
 -   Create and start Postgres container:
-  `docker run --name postgres_metastore -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres-tpcds-metastore:1.1`      
+  `docker run --name postgres_metastore -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres-tpcds-metastore:1.0`      
 -   Verify that the container is running: `docker ps`
 -   Stop Postgres container: `docker stop postgres_metastore`
 -   Remove Postgres container: `docker rm postgres_metastore`
@@ -51,7 +51,7 @@ The database dumps are located under the `dbdumps` directory. Their name
 indicates the main dataset represented by the store as well as the version of
 the metastore.
 
-At the moment, the dumps are not clean meaning that they do not contain only a
+At the moment, the dumps are not clean meaning that they may not contain only a
 single Hive database. We highlight below the name of the Hive database that is
 the most relevant for exploration and testing purposes:
 
@@ -61,24 +61,8 @@ the most relevant for exploration and testing purposes:
 | tpcds30tb_metastore_3_1_3000 | default |
 
 If you need to use the current dumps with a more recent version of Hive then
-there are two options.
-
-### Option A
-
-After creating and starting the Postgres container you can use the
+after creating and starting the Postgres container you can use the
 [schematool](https://cwiki.apache.org/confluence/display/Hive/Hive+Schema+Tool)
 to upgrade the metastore:
 
     schematool -dbType postgres -upgradeSchemaFrom 3.1.3000 -driver org.postgresql.Driver -url jdbc:postgresql://localhost:5432/metastore -userName hive -passWord hive
-
-
-### Option B
-
-Use the respective environment variables when you start the docker container:
-`-e UPGRADE=true UPGRADE_FROM=3.1.3000 UPGRADE_TO=4.0.0`
-
-By default the upgrade to version `4.0.0` is activated but you can disable by
-setting `UPGRADE=false`.
-
-Note that eventually this option for upgrading the metastore may be be removed
-in favor of `schemaTool`.
